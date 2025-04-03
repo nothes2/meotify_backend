@@ -6,5 +6,6 @@ export const db = client.db("meowtify")
 export async function connectDB() {
     await client.connect();
     console.log("✅ Database Connected Successfully!");
-    
+    return client
+
 }

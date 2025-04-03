@@ -8,6 +8,10 @@ export class LoginUseCase {
 
     return await this.authRepository.login(email, password);
   }
+
+  async loginByToken(id: string) {
+    return await this.authRepository.loginByToken(id);
+  }
 }
 
 

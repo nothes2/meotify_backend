@@ -9,6 +9,7 @@
     "@elysiajs/cors": "^1.2.0",
     "@elysiajs/jwt": "^1.2.0",
     "elysia": "latest",
+    "jwt-decode": "^4.0.0",
     "mongodb": "^6.15.0"
   },
   "devDependencies": {
