@@ -1,13 +1,18 @@
 import { User } from "@features/user/domain/entities/en_user";
 import {AuthRepository} from "@features/user/data/repository/auth_repository"
-import {connectDB, db} from "@core/config/database";
 import {password} from "bun";
 import * as Bun from "bun";
-import {ObjectId} from "mongodb";
-import {PlayList} from "@features/user/domain/entities/en_playlist";
+import {Collection, ObjectId} from "mongodb";
+import {PlayList} from "@features/playlist/domain/entities/en_playlist";
+import { getDB, startSession } from "@core/config/database";
 export class AuthRepositoryImpl implements AuthRepository{
-  private client = connectDB();
-  private collection = db.collection("user")
+  private collection: Collection;
+
+  constructor() {
+    this.collection = getDB().collection("user");
+  }
+
+
 
   async usernameCheck(username: string): Promise<boolean> {
     const result = await this.collection.findOne({ "user.username": username });
@@ -21,9 +26,11 @@ export class AuthRepositoryImpl implements AuthRepository{
 
   async register(username: string, email: string, password: string): Promise<boolean> {
 
-    const session = (await this.client).startSession()
+    const session = startSession()
 
     try{
+      if(!session || session === undefined) return false;
+
       let result
       session.startTransaction()
       const user: User = new User(username, email,await Bun.password.hash(password, { algorithm: "bcrypt",
@@ -39,7 +46,7 @@ export class AuthRepositoryImpl implements AuthRepository{
         return false;
       }
 
-     const collection = db.collection("playlist")
+     const collection = getDB().collection("playlist")
       const playlist = new PlayList(
           "Loved Playlist",
           "ic_loved.svg",

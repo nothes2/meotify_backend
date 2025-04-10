@@ -1,12 +1,23 @@
 import { ObjectId } from "mongodb"
+
+export class Library {
+    constructor(
+        list?: PlayList,
+        _id?: string
+    ){
+
+    }
+}
+
 export class PlayList {
     name: string;
-    image: string;
+   
     can_be_removed: boolean;
     type: string;
     created_at: Date;
     updated_at: Date;
     user_id: ObjectId
+    image?: string;
     songs?: Array<any>;
     subfolders?: Array<any>;
     description?: string;
@@ -14,12 +25,13 @@ export class PlayList {
 
     constructor(
         name: string,
-        image: string,
+        
         can_be_removed: boolean,
-        type: "playlist" | "folder",
+        type: string,
         created_at: Date,
         updated_at: Date,
         user_id: ObjectId,
+        image?: string,
         songs?: Array<any>,
         subfolders?: Array<any>,
         description?: string,

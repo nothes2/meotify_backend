@@ -8,11 +8,16 @@
   "dependencies": {
     "@elysiajs/cors": "^1.2.0",
     "@elysiajs/jwt": "^1.2.0",
+    "@types/ffmpeg": "^1.0.7",
+    "@types/serve-static": "^1.15.7",
     "elysia": "latest",
+    "fluent-ffmpeg": "^2.1.3",
     "jwt-decode": "^4.0.0",
-    "mongodb": "^6.15.0"
+    "mongodb": "^6.15.0",
+    "serve-static": "^2.2.0"
   },
   "devDependencies": {
+    "@types/fluent-ffmpeg": "^2.1.27",
     "bun-types": "latest"
   },
   "module": "src/index.js",
