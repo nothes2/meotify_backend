@@ -13,10 +13,8 @@ export class FileUploadImpl implements FileUploadRepo {
         this.collection = getDB().collection("song")
     }
     async publishMusic(_id: ObjectId, publish_path: string, publish_cover: string, title: string, genre: string, uploader_id: string): Promise<boolean> {
-        console.log(_id)
         try {
-
-            const result = await this.collection.findOneAndUpdate({ "track._id": _id }, {
+            const result = await this.collection.findOneAndUpdate({ "track._id": new ObjectId(_id) }, {
                 $set: {
                     "track.url": publish_path,
                     "track.coverUrl": publish_cover,
@@ -27,12 +25,11 @@ export class FileUploadImpl implements FileUploadRepo {
                     "track.updatedAt": true
                 }
             })
-            return !!result
+            return result !== null
         } catch (error) {
             console.log(error);
-
         }
-
+        return false;
     }
 
     async uploadMusic(track: Track): Promise<boolean> {
