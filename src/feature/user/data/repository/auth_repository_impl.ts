@@ -11,6 +11,14 @@ export class AuthRepositoryImpl implements AuthRepository{
   constructor() {
     this.collection = getDB().collection("user");
   }
+  async findUserById(id: string): Promise<string> {
+    const result = await this.collection.findOne(
+      { _id: new ObjectId(id) },
+      { projection: { 'user.username': 1 } }
+    );
+
+    return result?.user?.username ?? null;
+  }
 
 
 
@@ -49,12 +57,12 @@ export class AuthRepositoryImpl implements AuthRepository{
      const collection = getDB().collection("playlist")
       const playlist = new PlayList(
           "Loved Playlist",
-          "ic_loved.svg",
           false,
           "playlist",
           new Date(),
           new Date(),
           id,
+          "ic_loved.svg",
           [],
           [],
       )

@@ -11,7 +11,6 @@ export class Library {
 
 export class PlayList {
     name: string;
-   
     can_be_removed: boolean;
     type: string;
     created_at: Date;

@@ -38,3 +38,11 @@ export class UsernameCheckUseCase {
     return await this.authRepository.usernameCheck(username);
   }
 }
+
+
+export class FindUserByIdUseCase {
+  constructor(private authRepository: AuthRepository) {}
+  async execute(id: string): Promise<string> {
+    return await this.authRepository.findUserById(id);
+  }
+}

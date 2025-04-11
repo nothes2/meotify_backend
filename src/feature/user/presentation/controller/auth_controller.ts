@@ -1,5 +1,5 @@
 import { Elysia } from "elysia";
-import { LoginUseCase, UsernameCheckUseCase, EmailCheckUseCase } from "@features/user/domain/usecases/auth_usecase";
+import { LoginUseCase, UsernameCheckUseCase, EmailCheckUseCase, FindUserByIdUseCase } from "@features/user/domain/usecases/auth_usecase";
 import { RegisterUseCase } from "@features/user/domain/usecases/auth_usecase";
 import { AuthRepositoryImpl } from "@features/user/data/repository/auth_repository_impl";
 import { jwtService } from "@core/security/jwt";
@@ -103,4 +103,26 @@ export const authController = new Elysia().use(jwtService)
     const usernameCheck = new UsernameCheckUseCase(authRepo);
     const flag = await usernameCheck.execute(username);
     return {success: flag, message: "success"} as ResponseBody;
-  });
+  }).post("/find_user_by_id", async ({body}) => {
+    console.log("entering find user by id ");
+    const {id} = body as any;
+    
+
+    if(!id) {
+      console.log("id not found")
+      return {success: false, message: "we cant  find this user!", data: []}
+    }
+
+    const findUserById  = new FindUserByIdUseCase(new AuthRepositoryImpl())
+
+    const user = await findUserById.execute(id)
+
+    if(!user) {
+      console.log("cant find user")
+      return {success: false, message: "can find this user!", data: []}
+    }
+
+    console.log("find user!")
+    return { success: true, message: "find the user!", data:[user]}
+})
+;

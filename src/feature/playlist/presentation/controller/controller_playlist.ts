@@ -23,7 +23,8 @@ export const playlistController = new Elysia().post("/playlist", async ({body}) 
     }
 
     return {success: true, message: "success!", data: [lib]}
-}).post("/add_album", async ({body}) => {
+})
+.post("/add_album", async ({body}) => {
   
     try {
   
@@ -62,8 +63,6 @@ export const playlistController = new Elysia().post("/playlist", async ({body}) 
         playlist.subfolders,
         playlist.description,
     );
-
-    
 
 
     const flag = new PlaylistRepo().addAlbum(playlist, albumId)
